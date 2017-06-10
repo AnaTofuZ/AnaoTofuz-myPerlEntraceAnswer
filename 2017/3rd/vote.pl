@@ -11,6 +11,9 @@ use warnings;
 my $AnaTofuZ_profile = { #ハッシュリファレンスなので
     name => "AnaTofuZ", #無名ハッシュを宣言する為に{}を使う
     favorite_foods => [qw/omuraisu sushi anpan inarizushi/],
+    # ハッシュは配列を持てない(スカラデータでない)ので,リファレンスをいれます
+    # 配列のリファレンスは[]でいきなり作れますが qwでショートカットも出来ます
+    # この場合なかでリストで展開されるので,ちゃんと入力したのと同じ意味になります
 }; 
 
 #
@@ -49,11 +52,16 @@ my @profile_array = ($AnaTofuZ_profile,$CodeHex_profile,$Anpanman_profile,$Yakum
 my $result_foods = {};
 
 for my $people  (@profile_array){
+        #ここで@profile_arrayにいれた1人1人をループの度に$peopleにいれてきます
+
     for  my $food (@{$people->{favorite_foods}}){
+        # 3$peopleのfavorite_foodsをfoodにいれていきます
     $result_foods->{$food}++;
+        #結果のハッシュを+1していきます
     }
 }
 
 for  (sort {$result_foods->{$b} <=> $result_foods->{$a}}(keys %{$result_foods}) ){
+    # ソートして出力
    print "$_ is $result_foods->{$_} points.\n";
 }
